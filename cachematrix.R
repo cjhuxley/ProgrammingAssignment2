@@ -6,11 +6,11 @@
 makeCacheMatrix <- function(x = matrix()) {
   inverse<- NULL
   storedVector<- x
+  result<-list()
   #set the matrix and set inverse to NULL in external environment
   setMatrix <- function(y) {
     storedVector <<- y
     inverse <<- NULL
-    result<<-list()
     }
   # get the value of the matrix
   getMatrix <- function() storedVector
@@ -34,14 +34,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x) {
   ## see if the inverse already exists. If so, return cache
-  noChange <- x$getInverse()
+  noChange <- result$getInverse()
   if(!is.null(noChange)) {
     message("getting cached data")
     return()
   }
   # generate the inverse, set it and thenreturn the result
   m <- solve(x)
-  x$setInverse<<- m
+  result$setInverse<<- m
   m
 }
 # end cacheSolve
