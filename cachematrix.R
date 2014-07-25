@@ -11,19 +11,19 @@ makeCacheMatrix <- function(x = matrix()) {
   setMatrix <- function(y) {
     storedVector <<- y
     inverse <<- NULL
-    }
+  }
   # get the value of the matrix
   getMatrix <- function() storedVector
   # generate inverse using solve() -- assumes always an invertable matrix so no error checking
-  setInverse <- function() inverse <<- solve(storedVector)
+  setInverse <- function() inverse <- solve(storedVector)
   # retrieve inverse
   getInverse <- function() inverse
   # list results of the function
   result<<-list(setMatrix = setMatrix, 
-                 getMatrix = getMatrix,
-                 setInverse = setInverse,
-                 getInverse = getInverse
-                 )
+                getMatrix = getMatrix,
+                setInverse = setInverse,
+                getInverse = getInverse
+  )
 }
 # end makeCacheMatrix
 
@@ -35,9 +35,9 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x) {
   ## see if the inverse already exists. If so, return cache
   noChange <- result$getInverse()
-  if(!is.null(noChange)) {
+  if((!is.null(noChange))&(x==result$getMatrix)) {
     message("getting cached data")
-    return()
+    return(result$getInverse)
   }
   # generate the inverse, set it and thenreturn the result
   m <- solve(x)
